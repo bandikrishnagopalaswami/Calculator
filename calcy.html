@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body{
+                background-color: rgb(215, 239, 237);
+            }
+            .background{
+                display:grid;
+                left:600px;
+                top:100px;
+                position:fixed;
+                width:190px;
+                grid-template-rows:55px 210px;
+            }
+            .input{
+                width:94.5%;
+                padding-bottom: 10px;
+                padding-left:5px;
+                padding-right:5px;
+                border-style:solid;
+                border-width:1px;
+            }
+            .res{
+                margin-top:10px;
+                margin-left:2px;
+                width:94%;
+                height:20px;
+                border-width: 2px;
+                background-color: white;
+                border-style: solid;
+                padding-top:5px;
+                padding-left:5px;
+                padding-bottom:3px;
+            }
+            .calcy{
+                border-width:1px;
+                border-top-style: none;
+                border-bottom-style:solid ;
+                border-left-style:solid ;
+                border-right-style:solid ;
+                padding:10px 0px 5px 10px;
+                width:198px;
+                display:grid;
+                grid-template-columns: 37px 37px 37px 37px;
+                column-gap:15px;
+                row-gap:10px;
+            }
+            .button-op,.button-mul,.button-num{
+                font-size:14px;
+                margin:0px;
+                height:35px;
+                border-radius: 25px;
+                border-style:none;
+            }
+            .button-op:hover,.button-mul:hover,.button-num:hover{
+                font-size:14px;
+                background-color: rgb(244, 161, 37);
+                color:white;
+            }
+            .button-op{
+                font-size: 15px;
+            }
+            .button-mul{
+                font-size:20px;
+            }
+            .h1-tag{
+                left:600px;
+                top:20px;
+                position:fixed;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="h1-tag">Calculator</h1>
+        <div class="background">
+            <div class="input"><p class="res"></p></div>
+            <div class="calcy">
+                <button class="button-num" onclick="display(0)">0</button>
+                <button class="button-num" onclick="display(1)">1</button>
+                <button class="button-num" onclick="display(2)">2</button>
+                <button class="button-op" onclick="display('+')">+</button>
+                <button class="button-num" onclick="display(3)">3</button>
+                <button class="button-num" onclick="display(4)">4</button>
+                <button class="button-num" onclick="display(5)">5</button>
+                <button class="button-op" onclick="display('-')">-</button>
+                <button class="button-num" onclick="display(6)">6</button>
+                <button class="button-num" onclick="display(7)">7</button>
+                <button class="button-num" onclick="display(8)">8</button>
+                <button class="button-mul" onclick="display('*')">*</button>
+                <button class="button-num" onclick="display(9)">9</button>
+                <button class="button-op" onclick="display('ac')">AC</button>
+                <button class="button-op" onclick="result()">=</button>
+                <button class="button-op" onclick="display('/')">/</button>
+            </div>
+        </div>
+        <script>
+            let s=``,operator="",final_res="",res1="";
+            let display_value=document.querySelector(".res");
+            function display(value){
+                if(value==="ac"){
+                    final_res="";
+                    res1="";
+                    s=``;
+                    operator="";
+                }
+                else if(value=="+"||value=="-"||value=="*"||value=="/"){
+                    if(operator.length==0){
+                        operator=value;
+                    }
+                    else{
+                        result();
+                        operator=value;
+                    }
+                    if(final_res.length===0){
+                        final_res=res1;
+                    }
+                    res1="";
+                    s+=value;
+                }
+                else{
+                    res1+=value;
+                    s+=value;
+                    //console.log(res1);
+                }
+                display_value.innerHTML=`${s}`;
+            }
+            function result(){
+                final_res=Number(final_res);
+                res1=Number(res1);
+                if(operator=="+"){
+                    final_res=final_res+res1;
+                    display_value.innerHTML=`${final_res}`;
+                }
+                else if(operator=="-"){
+                    final_res=final_res-res1;
+                    display_value.innerHTML=`${final_res}`;
+                }
+                else if(operator=="*"){
+                    final_res=final_res*res1;
+                    display_value.innerHTML=`${final_res}`;
+                }
+                else{
+                    if(res1==0){
+                        display_value.innerHTML=`Math error`;
+                    }
+                    else{
+                    final_res=final_res/res1;
+                    display_value.innerHTML=`${final_res}`;
+                    }
+                }
+                console.log(final_res,res1);
+                operator="";
+                res1="";
+                s=final_res;
+            }
+        </script>
+    </body>
+</html>
